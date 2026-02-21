@@ -30,6 +30,30 @@
 #include <string.h>  // strlen
 
 bool isValid(const char *s) {
+        if(s == NULL){
+        return false;
+    }
+    
+        size_t len = strlen(s);
+        char stack[len];
+        int top = -1;
+
+        for(size_t i = 0; i < len;i++){
+            char c = s[i];
+
+            if(c == '(' || c == '{' || c == '['){
+                stack[++top] = c;
+            }
+            else if(c == ')' || c == '}' || c == ']'){
+                if (top == -1) return false;
+                char last = stack[top--];
+
+                if((c == ')' && last != '(') || (c == ']' && last != '[') || (c == '}' && last != '{')){
+                    return false;
+                }
+            }
+        } 
+        return top == -1; 
     // TODO: Implement using a stack.
     //
     // Recommended approach:
