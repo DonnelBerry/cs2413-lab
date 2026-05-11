@@ -32,9 +32,43 @@ Notes:
 - The sorting should be done in ascending order.
 */
 
+int partition(int arr[], int low, int high);
+void quickSortHelper(int arr[], int low, int high);
+
 void quickSort(int arr[], int size) {
-    // TODO: implement quick sort
-    (void)arr;
-    (void)size;
+    if (size <= 1) {
+        return;
+    }
+
+    quickSortHelper(arr, 0, size - 1);
 }
 
+void quickSortHelper(int arr[], int low, int high) {
+    if (low < high) {
+        int pivotIndex = partition(arr, low, high);
+
+        quickSortHelper(arr, low, pivotIndex - 1);
+        quickSortHelper(arr, pivotIndex + 1, high);
+    }
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;
+}
